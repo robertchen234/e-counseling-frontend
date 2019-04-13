@@ -12,7 +12,12 @@ import {
 } from "blockstack";
 import { Route, Switch, withRouter } from "react-router-dom";
 import CounselorContainer from "./containers/CounselorContainer";
+<<<<<<< HEAD
 import TaskList from "./containers/TaskList";
+=======
+import CounselorProfile from "./components/CounselorProfile";
+
+>>>>>>> 04daecd31f5ed9a57af9c0175b656fe3f62a468f
 class App extends Component {
   constructor(props) {
     super(props);
@@ -22,7 +27,7 @@ class App extends Component {
       personName: "",
       personAvatar: "",
       created: false,
-      counselors: []
+      counselors: [],
     };
   }
 
@@ -45,6 +50,9 @@ class App extends Component {
       .then(resp => resp.json())
       .then(users => {
         this.setState({ users });
+
+        let counselorList = users.filter(user => user.role === "counselor");
+        this.setState({ counselors: counselorList });
 
         const currentUser = users.find(user => {
           return user.name === this.state.personName;
@@ -87,8 +95,8 @@ class App extends Component {
       });
   }
 
+
   render() {
-    console.log(this.state.currentUser);
     return (
       <div className="site-wrapper">
         <div className="site-wrapper-inner">
@@ -103,15 +111,20 @@ class App extends Component {
           <div>
             <Switch>
               <Route
-                path="/counselorprofile/:id"
+                path="/counselors/:id"
                 render={() => (
-                  <CounselorProfile counselors={this.state.counselors} />
+                  <CounselorProfile
+                    counselors={this.state.counselors}
+                    chosenCounselor={this.state.chosenCounselor}
+                    {...this.props}
+                  />
                 )}
               />
 
               <Route
                 path="/counselors"
                 render={() => (
+<<<<<<< HEAD
                   <CounselorContainer counselors={this.state.counselors} />
                 )}
               />
@@ -119,6 +132,14 @@ class App extends Component {
                 path="/todolist"
                 component={TaskList}
                 user={this.state.currentUser}
+=======
+                  <CounselorContainer
+                    counselors={this.state.counselors}
+                    {...this.props}
+                    counselorChosen={this.counselorChosen}
+                  />
+                )}
+>>>>>>> 04daecd31f5ed9a57af9c0175b656fe3f62a468f
               />
             </Switch>
           </div>
