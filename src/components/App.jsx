@@ -8,7 +8,8 @@ import {
   handlePendingSignIn,
   signUserOut
 } from "blockstack";
-import Session from "./session/Session";
+
+import Session from "./session/Session.jsx";
 
 export default class App extends Component {
   constructor(props) {

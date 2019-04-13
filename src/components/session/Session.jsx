@@ -13,7 +13,7 @@ class Session extends Component {
       audio: true
     });
 
-    if (this.props.userRole === "counselor") {
+    if (this.props.currentUser.role === "counselor") {
       mediaStream.then(stream => (this.videoRef.current.srcObject = stream));
     } else {
       mediaStream.then(stream => (this.videoRemoteRef.srcObject = stream));
