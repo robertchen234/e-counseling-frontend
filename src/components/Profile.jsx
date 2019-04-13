@@ -29,10 +29,6 @@ export default class Profile extends Component {
     return (
       !isSignInPending() ?
       <div className="panel-welcome" id="section-2">
-        <div className="avatar-section">
-          <img src={ person.avatarUrl() ? person.avatarUrl() : avatarFallbackImage } className="img-rounded avatar" id="avatar-image" />
-        </div>
-        <h1>Hello, <span id="heading-name">{ person.name() ? person.name() : 'Nameless Person' }</span>!</h1>
         <p className="lead">
           <button
             className="btn btn-primary btn-lg"
@@ -42,6 +38,12 @@ export default class Profile extends Component {
             Logout
           </button>
         </p>
+        <div className="avatar-section">
+          <img src={ person.avatarUrl() ? person.avatarUrl() : avatarFallbackImage } className="img-rounded avatar" id="avatar-image" />
+        </div>
+        <h1>Hello, <span id="heading-name">{ person.name() ? person.name() : 'Nameless Person' }</span>!</h1>
+        <button>See My To-Do List</button>
+        <button>Talk To a Counselor</button>
       </div> : null
     );
   }

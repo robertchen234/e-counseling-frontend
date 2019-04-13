@@ -10,6 +10,8 @@ import {
   loadUserData,
   Person
 } from "blockstack";
+import { Route, Switch, withRouter } from "react-router-dom";
+import CounselorContainer from "./containers/CounselorContainer";
 
 export default class App extends Component {
   constructor(props) {
@@ -27,7 +29,8 @@ export default class App extends Component {
       currentUser: {},
       personName: "",
       personAvatar: "",
-      created: false
+      created: false,
+      counselors: []
     };
   }
 
@@ -100,11 +103,33 @@ export default class App extends Component {
           {!isUserSignedIn() ? (
             <Signin handleSignIn={this.handleSignIn} />
           ) : (
-            <Profile
-              handleSignOut={this.handleSignOut}
-              getUsers={this.getUsers}
-            />
+            <Profile handleSignOut={this.handleSignOut} getUsers={this.getUsers}/>
           )}
+          <div>
+            <Switch>
+              <Route
+                path="/counselorprofile/:id"
+                render={() => (
+                  <CounselorProfile counselors={this.state.counselors} />
+                )}
+              />
+
+              <Route
+                path="/counselors"
+                render={() => (
+                  <CounselorContainer counselors={this.state.counselors} />
+                )}
+              />
+
+              <Route
+                path="/"
+                render={() => (
+                  <CounselorContainer counselors={this.state.counselors} />
+                )}
+              />
+            </Switch>
+          </div>
+
         </div>
       </div>
     );
@@ -123,8 +148,8 @@ export default class App extends Component {
       });
     }
   }
-
   componentDidMount() {
     this.getUsers();
   }
 }
+export default withRouter(App);
