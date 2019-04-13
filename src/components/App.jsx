@@ -1,4 +1,4 @@
-import React, { Component, Link } from "react";
+import React, { Component } from "react";
 import Profile from "./Profile.jsx";
 import Signin from "./Signin.jsx";
 import {
@@ -10,11 +10,13 @@ import {
   loadUserData,
   Person
 } from "blockstack";
-import { Route, Switch, withRouter } from "react-router-dom";
+import { Route, Switch, withRouter, Redirect } from "react-router-dom";
 import CounselorContainer from "./containers/CounselorContainer";
 import CounselorProfile from "./components/CounselorProfile";
 import Home from "./components/Home";
 import CreateTaskForm from "./components/CreateTaskForm";
+
+import Session from "./session/Session.jsx";
 
 class App extends Component {
   constructor(props) {
@@ -26,6 +28,7 @@ class App extends Component {
       personAvatar: "",
       created: false,
       counselors: [],
+      loaded: false,
       tasks: []
     };
   }
@@ -115,6 +118,10 @@ class App extends Component {
   }
 
   render() {
+    if (this.state.currentUser.role && this.state.loaded === false) {
+      this.props.history.push(`/session`);
+      this.setState({ loaded: true });
+    }
     return (
       <div className="site-wrapper">
         <div className="site-wrapper-inner">
@@ -140,6 +147,10 @@ class App extends Component {
               />
 
               <Route
+                path="/session"
+                render={() => <Session currentUser={this.state.currentUser} />}
+              />
+              <Route
                 path="/counselors"
                 render={() => (
                   <CounselorContainer
@@ -162,6 +173,8 @@ class App extends Component {
       </div>
     );
   }
+
+  componentDidUpdate(prevState, prevProps) {}
 
   componentWillMount() {
     if (isSignInPending()) {

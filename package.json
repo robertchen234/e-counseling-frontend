@@ -41,12 +41,13 @@
     "blockstack": "^18.3.0",
     "bootstrap": "^3.4.1",
     "i": "^0.3.6",
-    "npm": "^6.9.0",
-    "react": "^15.5.4",
     "react-bootstrap": "^1.0.0-beta.8",
-    "react-dom": "^15.6.2",
-    "react-router": "^5.0.0",
+    "semantic-ui-react": "^0.86.0",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
     "react-router-dom": "^5.0.0",
-    "semantic-ui-react": "^0.86.0"
+    "react-scripts": "2.1.8",
+    "react-stars": "^2.2.5",
+    "simple-peer": "^9.3.0"
   }
 }
