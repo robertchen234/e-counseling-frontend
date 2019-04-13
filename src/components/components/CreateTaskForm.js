@@ -1,43 +1,44 @@
-import React from "react";
-import { Button, Form, TextArea } from "semantic-ui-react";
+import React, { Component } from "react";
 
-class CreateTaskForm extends React.Component {
+class CreateTaskForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
       task: ""
     };
-    this.setState = this.setState.bind(this);
-    this.handleChange = this.changeHandler.bind(this);
-    this.handleSubmit = this.submitHandler.bind(this);
+    // this.setState = this.setState.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  changeHandler(e) {
+  handleChange(e) {
     this.setState({
       [e.target.name]: e.target.value
     });
   }
 
-  submitHandler(e) {
-    e.preventDefault();
-    // console.log(e);
-    this.props.parentSubmit(this.state);
-    this.setState({
-      task: ""
-    });
-    e.target.reset();
+  handleSubmit(e) {
+    e.preventDefault()
+    this.props.handleSubmit(this.props.counselor_id, this.props.patient_id, this.state.task)
   }
 
   render() {
+    console.log(this.state.task);
     return (
       <div>
-        <h1>Create Task</h1>
+        <h1>Create Task for Patient</h1>
         <form>
-            <label>Name</label>
-            <input type='text' placeholder='name' />
+          <input
+            type="field"
+            name="task"
+            value={this.state.task}
+            onChange={this.handleChange}
+          />
+          <input type="submit" />
         </form>
       </div>
     );
   }
 }
+
 export default CreateTaskForm;

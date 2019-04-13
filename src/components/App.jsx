@@ -13,8 +13,8 @@ import {
 import { Route, Switch, withRouter } from "react-router-dom";
 import CounselorContainer from "./containers/CounselorContainer";
 import CounselorProfile from "./components/CounselorProfile";
-import Home from './components/Home'
-import CreateTaskForm from "./components/CreateTaskForm.js";
+import Home from "./components/Home";
+import CreateTaskForm from "./components/CreateTaskForm";
 
 class App extends Component {
   constructor(props) {
@@ -26,6 +26,7 @@ class App extends Component {
       personAvatar: "",
       created: false,
       counselors: [],
+      tasks: []
     };
   }
 
@@ -93,6 +94,25 @@ class App extends Component {
       });
   }
 
+  handleSubmit(patient_id, counselor_id, task) {
+    fetch("http://localhost:3000/api/v1/tasks", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+      body: JSON.stringify({
+        patient_id,
+        counselor_id,
+        task
+      })
+    })
+      .then(res => res.json())
+      .then(data => {
+        let newArr = [...this.state.tasks, data];
+        this.setState({ tasks: newArr });
+      });
+  }
 
   render() {
     return (
@@ -130,15 +150,12 @@ class App extends Component {
                 )}
               />
 
-              <Route  
-                path='/todolist'
-                component={CreateTaskForm}
-                />
+              <Route path="/todolist" 
+              render={() => (
+                <CreateTaskForm handleSubmit={this.handleSubmit}/>
+              )} />
 
-              <Route 
-                path='/'
-                component={Home}
-              />
+              <Route path="/" component={Home} />
             </Switch>
           </div>
         </div>
@@ -155,7 +172,7 @@ class App extends Component {
 
     if (isUserSignedIn()) {
       const userData = loadUserData();
-      
+
       this.setState({
         personName: userData.username
       });
