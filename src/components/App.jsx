@@ -15,14 +15,6 @@ export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      person: {
-        name() {
-          return "Anonymous";
-        },
-        avatarUrl() {
-          return avatarFallbackImage;
-        }
-      },
       users: [],
       currentUser: {},
       personName: "",
@@ -52,14 +44,14 @@ export default class App extends Component {
         this.setState({ users });
 
         const currentUser = users.find(user => {
-          return user.name.toString() === this.state.person.name().toString();
+          return user.name.toString() === this.state.personName;
         });
 
         if (currentUser) {
           this.setState({
             currentUser
           });
-        } else if (this.state.person.name().toString() !== "Anonymous") {
+        } else if (this.state.personName !== "Anonymous") {
           this.createNewUser();
         }
       });
@@ -77,7 +69,7 @@ export default class App extends Component {
         Accept: "application/json"
       },
       body: JSON.stringify({
-        name: this.state.person.name(),
+        name: this.state.personName,
         bio: null,
         role: "patient",
         image: "https://s3.amazonaws.com/onename/avatar-placeholder.png",
@@ -118,8 +110,10 @@ export default class App extends Component {
     }
 
     if (isUserSignedIn()) {
+      const userData = loadUserData();
+      
       this.setState({
-        person: new Person(loadUserData().profile)
+        personName: userData.username
       });
     }
   }
