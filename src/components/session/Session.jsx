@@ -5,22 +5,21 @@ import Peer from "simple-peer";
 class Session extends Component {
   constructor(props) {
     super(props);
-    debugger;
+    // debugger;
     this.videoRef = React.createRef();
     this.videoRemoteRef = React.createRef();
   }
 
   componentDidMount() {
     //   navigator.mediaDevices.getUserMedia({ video: true, audio: true }, gotMedia, function() {})
-    navigator.mediaDevices
-      .getUserMedia({
-        video: true,
-        audio: true
-      })
-      .then(stream => {
-        // debugger;
-        this.videoRef.current.srcObject = stream;
-      });
+    const media = navigator.mediaDevices.getUserMedia({
+      video: true,
+      audio: true
+    });
+    //   .then(stream => {
+    //     console.log(this);
+    //     this.videoRef.current.srcObject = stream;
+    //   });
 
     // // debugger;
     // if (this.props.location.state.role === "counselor") {
@@ -46,7 +45,12 @@ class Session extends Component {
     return (
       <React.Fragment>
         <div id="local">
-          <video autoPlay={true} muted={true} ref={this.videoRef} />
+          <video
+            id="local-video"
+            autoPlay={true}
+            muted={true}
+            ref={this.videoRef}
+          />
         </div>
         <div id="remote">
           <video autoPlay={true} ref={this.videoRemoteRef} />

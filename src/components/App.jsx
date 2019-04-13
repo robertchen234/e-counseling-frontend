@@ -24,7 +24,8 @@ class App extends Component {
       personName: "",
       personAvatar: "",
       created: false,
-      counselors: []
+      counselors: [],
+      loaded: false
     };
   }
 
@@ -90,15 +91,13 @@ class App extends Component {
   }
 
   render() {
-    if (this.state.currentUser.role === "counselor") {
-      this.props.history.push({
-        pathname: `/session/${this.state.currentUser.id}`,
-        state: {
-          role: this.state.currentUser.role
-        }
-      });
+    if (
+      this.state.currentUser.role === "counselor" &&
+      this.state.loaded === false
+    ) {
+      this.props.history.push(`/session/${this.state.currentUser.id}`);
+      this.setState({ loaded: true });
     }
-
     return (
       <div className="site-wrapper">
         <div className="site-wrapper-inner">
@@ -142,6 +141,8 @@ class App extends Component {
       </div>
     );
   }
+
+  componentDidUpdate(prevState, prevProps) {}
 
   componentWillMount() {
     if (isSignInPending()) {
