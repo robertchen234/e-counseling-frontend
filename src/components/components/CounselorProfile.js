@@ -2,9 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faVideo } from "@fortawesome/free-solid-svg-icons";
+import { faVideo, faEnvelope } from "@fortawesome/free-solid-svg-icons";
 
-library.add(faVideo);
+library.add(faVideo, faEnvelope);
 
 const CounselorProfile = props => {
   let currentId = parseInt(props.location.pathname.replace(/^\D+/g, ""));
@@ -24,6 +24,8 @@ const CounselorProfile = props => {
                 src={currentCounselor.image}
                 alt="counselor"
               />
+              <br />
+              <a href='mailto:mail@mail.com'><span><FontAwesomeIcon icon={faEnvelope} size="1x" /> Email Me to schedule an appointment</span></a>
             </div>
             <div className="profile-info">
               <p>{currentCounselor.bio}</p>
