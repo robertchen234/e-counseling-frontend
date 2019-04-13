@@ -13,6 +13,8 @@ import {
 import { Route, Switch, withRouter } from "react-router-dom";
 import CounselorContainer from "./containers/CounselorContainer";
 import CounselorProfile from "./components/CounselorProfile";
+import Home from './components/Home'
+import CreateTaskForm from "./components/CreateTaskForm.js";
 
 class App extends Component {
   constructor(props) {
@@ -126,6 +128,16 @@ class App extends Component {
                     counselorChosen={this.counselorChosen}
                   />
                 )}
+              />
+
+              <Route  
+                path='/todolist'
+                component={CreateTaskForm}
+                />
+
+              <Route 
+                path='/'
+                component={Home}
               />
             </Switch>
           </div>

@@ -31,7 +31,7 @@ export default class Profile extends Component {
     const { handleSignOut } = this.props;
     const { person } = this.state;
     return !isSignInPending() ? (
-      <Menu>
+      <Menu className='navbar'>
         <Link to="/">
           <Menu.Item
             name="Home"
