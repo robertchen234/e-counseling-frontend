@@ -8,6 +8,7 @@ class Session extends Component {
     // debugger;
     this.videoRef = React.createRef();
     this.videoRemoteRef = React.createRef();
+    console.log("hello");
   }
 
   componentDidMount() {
@@ -21,12 +22,14 @@ class Session extends Component {
     //     this.videoRef.current.srcObject = stream;
     //   });
 
-    // // debugger;
-    // if (this.props.location.state.role === "counselor") {
-    //   mediaStream.then(this.videoRef.current.srcObject);
-    // } else {
-    //   mediaStream.then(stream => (this.videoRemoteRef.srcObject = stream));
-    // }
+    // console.log(this.props);
+    if (this.props.currentUser.role === "counselor") {
+      media.then(stream => (this.videoRef.current.srcObject = stream));
+    } else {
+      //   debugger;
+      media.then(stream => (this.videoRemoteRef.srcObject = stream));
+    }
+
     // function gotMedia(stream) {
     //   const peer1 = new Peer({ initiator: true, stream: stream });
     //   const peer2 = new Peer();

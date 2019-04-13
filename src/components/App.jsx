@@ -91,11 +91,8 @@ class App extends Component {
   }
 
   render() {
-    if (
-      this.state.currentUser.role === "counselor" &&
-      this.state.loaded === false
-    ) {
-      this.props.history.push(`/session/${this.state.currentUser.id}`);
+    if (this.state.currentUser.role && this.state.loaded === false) {
+      this.props.history.push(`/session`);
       this.setState({ loaded: true });
     }
     return (
@@ -119,7 +116,7 @@ class App extends Component {
               />
 
               <Route
-                path="/session/:id"
+                path="/session"
                 render={() => <Session currentUser={this.state.currentUser} />}
               />
               <Route
