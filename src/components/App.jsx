@@ -12,8 +12,8 @@ import {
 } from "blockstack";
 import { Route, Switch, withRouter } from "react-router-dom";
 import CounselorContainer from "./containers/CounselorContainer";
-
-export default class App extends Component {
+import TaskList from "./containers/TaskList";
+class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -103,7 +103,10 @@ export default class App extends Component {
           {!isUserSignedIn() ? (
             <Signin handleSignIn={this.handleSignIn} />
           ) : (
-            <Profile handleSignOut={this.handleSignOut} getUsers={this.getUsers}/>
+            <Profile
+              handleSignOut={this.handleSignOut}
+              getUsers={this.getUsers}
+            />
           )}
           <div>
             <Switch>
@@ -120,16 +123,13 @@ export default class App extends Component {
                   <CounselorContainer counselors={this.state.counselors} />
                 )}
               />
-
               <Route
-                path="/"
-                render={() => (
-                  <CounselorContainer counselors={this.state.counselors} />
-                )}
+                path="/todolist"
+                component={TaskList}
+                user={this.state.currentUser}
               />
             </Switch>
           </div>
-
         </div>
       </div>
     );
@@ -152,4 +152,5 @@ export default class App extends Component {
     this.getUsers();
   }
 }
+
 export default withRouter(App);
