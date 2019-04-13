@@ -12,8 +12,9 @@ import {
 } from "blockstack";
 import { Route, Switch, withRouter } from "react-router-dom";
 import CounselorContainer from "./containers/CounselorContainer";
+import CounselorProfile from "./components/CounselorProfile";
 
-export default class App extends Component {
+class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -30,7 +31,7 @@ export default class App extends Component {
       personName: "",
       personAvatar: "",
       created: false,
-      counselors: []
+      counselors: [],
     };
   }
 
@@ -53,6 +54,9 @@ export default class App extends Component {
       .then(resp => resp.json())
       .then(users => {
         this.setState({ users });
+
+        let counselorList = users.filter(user => user.role === "counselor");
+        this.setState({ counselors: counselorList });
 
         const currentUser = users.find(user => {
           return user.name.toString() === this.state.person.name().toString();
@@ -95,41 +99,44 @@ export default class App extends Component {
       });
   }
 
+
   render() {
-    console.log(this.state.currentUser);
     return (
       <div className="site-wrapper">
         <div className="site-wrapper-inner">
           {!isUserSignedIn() ? (
             <Signin handleSignIn={this.handleSignIn} />
           ) : (
-            <Profile handleSignOut={this.handleSignOut} getUsers={this.getUsers}/>
+            <Profile
+              handleSignOut={this.handleSignOut}
+              getUsers={this.getUsers}
+            />
           )}
           <div>
             <Switch>
               <Route
-                path="/counselorprofile/:id"
+                path="/counselors/:id"
                 render={() => (
-                  <CounselorProfile counselors={this.state.counselors} />
+                  <CounselorProfile
+                    counselors={this.state.counselors}
+                    chosenCounselor={this.state.chosenCounselor}
+                    {...this.props}
+                  />
                 )}
               />
 
               <Route
                 path="/counselors"
                 render={() => (
-                  <CounselorContainer counselors={this.state.counselors} />
-                )}
-              />
-
-              <Route
-                path="/"
-                render={() => (
-                  <CounselorContainer counselors={this.state.counselors} />
+                  <CounselorContainer
+                    counselors={this.state.counselors}
+                    {...this.props}
+                    counselorChosen={this.counselorChosen}
+                  />
                 )}
               />
             </Switch>
           </div>
-
         </div>
       </div>
     );

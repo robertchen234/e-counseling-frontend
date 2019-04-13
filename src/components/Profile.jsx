@@ -4,6 +4,7 @@ import {
   loadUserData,
   Person,
 } from 'blockstack';
+import {Link} from 'react-router-dom'
 
 const avatarFallbackImage = 'https://s3.amazonaws.com/onename/avatar-placeholder.png';
 
@@ -43,7 +44,7 @@ export default class Profile extends Component {
         </div>
         <h1>Hello, <span id="heading-name">{ person.name() ? person.name() : 'Nameless Person' }</span>!</h1>
         <button>See My To-Do List</button>
-        <button>Talk To a Counselor</button>
+        <Link to='/counselors'><button>Talk To a Counselor</button></Link>
       </div> : null
     );
   }
