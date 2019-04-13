@@ -1,4 +1,5 @@
 import React from "react";
+
 import { Link } from "react-router-dom";
 
 class CounselorCard extends React.Component {
@@ -25,7 +26,9 @@ class CounselorCard extends React.Component {
         </div>
         <div className="counselor-card-bio">
           <Link to={`/counselorprofile/${counselor.id}`}>
-            <h3 onClick={(e) => this.clickHandler(e, counselor)}>{counselor.name}</h3>
+            <h3 onClick={e => this.clickHandler(e, counselor)}>
+              {counselor.name}
+            </h3>
           </Link>
           <p>{truncatedBio}...</p>
         </div>

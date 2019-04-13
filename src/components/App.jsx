@@ -47,7 +47,7 @@ class App extends Component {
         this.setState({ users });
 
         const currentUser = users.find(user => {
-          return user.name.toString() === this.state.personName;
+          return user.name === this.state.personName;
         });
 
         if (currentUser) {
@@ -136,7 +136,8 @@ class App extends Component {
 
     if (isUserSignedIn()) {
       const userData = loadUserData();
-      
+      console.log(userData);
+
       this.setState({
         personName: userData.username
       });
