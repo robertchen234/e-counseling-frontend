@@ -3,7 +3,7 @@ import CounselorCard from "../components/CounselorCard";
 
 const CounselorContainer = props => {
   return (
-    <div>
+    <div className='counselor-container'>
       <h1>Our Counselors</h1>
       
       {props.counselors.map(counselor => (

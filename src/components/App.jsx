@@ -126,10 +126,6 @@ class App extends Component {
               />
 
               <Route
-                path="/session"
-                render={() => <Session currentUser={this.state.currentUser} />}
-              />
-              <Route
                 path="/counselors"
                 render={() => (
                   <CounselorContainer
@@ -138,6 +134,11 @@ class App extends Component {
                     counselorChosen={this.counselorChosen}
                   />
                 )}
+              />
+              
+              <Route
+                path="/session"
+                render={() => <Session currentUser={this.state.currentUser} />}
               />
 
               <Route path="/todolist" component={CreateTaskForm} />
