@@ -18,10 +18,6 @@ const CounselorProfile = props => {
                 src={currentCounselor.image}
                 alt="counselor"
               />
-              <br />
-              <a href={`mailto:${currentCounselor.email}`}>Email Me</a>
-              <br />
-              <button onClick={props.history.goBack}>Back</button>
             </div>
             <div className="profile-info">
               <p>

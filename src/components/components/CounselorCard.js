@@ -9,7 +9,7 @@ let truncatedBio = counselor.bio.substring(0, 200);
 return (
     <div className="counselor-card-container">
     <div className="counselor-card-img">
-        <img src={counselor.image} alt="counselor" />
+        <img className='counselor-img' src={counselor.image} alt="counselor" />
     </div>
     <div className="counselor-card-bio">
         <Link to={`/counselors/${counselor.id}`}>
