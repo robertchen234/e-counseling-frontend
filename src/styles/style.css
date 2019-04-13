@@ -6,13 +6,9 @@ a:hover {
 }
 html,
 body {
-  height: 100%;
-  /* background-color: #e91e63; */
 }
 body {
-  /* color: #fff;
-  text-align: center;
-} */
+
 /* .hide { */
   /* display: none; */
 }
@@ -113,6 +109,14 @@ textarea {
   /* color: #000; */
 }
 
+#signin-button {
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 1;
+    z-index: 10;
+}
 .counselor-img {
     height: auto;
     width: 110px;
@@ -204,4 +208,27 @@ textarea {
      width: 100%;
      height: auto;
      margin-bottom: 20px;
+ }
+ .vp {
+     text-align: center;
+     font-family: 'Bree Serif', serif;
+     font-size: 40px;
+ }
+ .vp-container {
+     display: flex;
+     justify-content: space-around;
+     margin: auto;
+ }
+ .vp-container div {
+     border: 2px solid black;
+     padding: 2em;
+     border-radius: 25px;
+     margin: auto;
+     -moz-box-shadow: 5px 6px 6px 0px #ccc;
+     -webkit-box-shadow: 5px 6px 6px 0px #ccc;
+     box-shadow: 5px 6px 6px 0px #ccc;
+ }
+ .vp-container p {
+    font-size: 20px;
+    font-family: 'Bree Serif', serif;
  }
