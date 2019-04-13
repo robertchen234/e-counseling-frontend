@@ -1,6 +1,8 @@
 import React, { Component } from "react";
-// import { withRouter } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Peer from "simple-peer";
+
+import CreateTaskForm from "../components/CreateTaskForm";
 
 class Session extends Component {
   constructor(props) {
@@ -58,6 +60,9 @@ class Session extends Component {
         <div id="remote">
           <video autoPlay={true} ref={this.videoRemoteRef} />
         </div>
+        <Link to="/todolist">
+          <h2 className="center">Create Task for Patient</h2>
+        </Link>
       </React.Fragment>
     );
   }

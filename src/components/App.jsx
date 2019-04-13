@@ -70,6 +70,14 @@ class App extends Component {
       });
   }
 
+  getTasks() {
+    fetch("http://localhost:3000/api/v1/tasks")
+      .then(resp => resp.json())
+      .then(tasks => {
+        this.setState({ tasks });
+      });
+  }
+
   // if user exists in our users array, then find that user and send that object to App's state as currentUser
   // else create new user object and tell our Rails backend about it, then send that object to App's state as currentUser
 
@@ -97,7 +105,8 @@ class App extends Component {
       });
   }
 
-  handleSubmit(patient_id, counselor_id, task) {
+  handleSubmit(counselor_id, patient_id, task) {
+    console.log(counselor_id, patient_id, task);
     fetch("http://localhost:3000/api/v1/tasks", {
       method: "POST",
       headers: {
@@ -107,14 +116,22 @@ class App extends Component {
       body: JSON.stringify({
         patient_id,
         counselor_id,
-        task
+        task,
+        complete: false
       })
-    })
-      .then(res => res.json())
-      .then(data => {
-        let newArr = [...this.state.tasks, data];
-        this.setState({ tasks: newArr });
-      });
+    }).then(() => {
+      fetch("http://localhost:3000/api/v1/tasks")
+        .then(resp => resp.json())
+        .then(tasks => {
+          this.setState({ tasks });
+        });
+    });
+    // .then(res => res.json())
+    // .then(data => {
+    //   console.log(data, "posted task");
+    //   let newArr = [...this.state.tasks, data];
+    //   this.setState({ tasks: newArr });
+    // });
   }
 
   render() {
@@ -161,10 +178,15 @@ class App extends Component {
                 )}
               />
 
-              <Route path="/todolist" 
-              render={() => (
-                <CreateTaskForm handleSubmit={this.handleSubmit}/>
-              )} />
+              <Route
+                path="/todolist"
+                render={() => (
+                  <CreateTaskForm
+                    handleSubmit={this.handleSubmit}
+                    counselor_id={this.state.currentUser.id}
+                  />
+                )}
+              />
 
               <Route path="/" component={Home} />
             </Switch>

@@ -18,24 +18,26 @@ class CreateTaskForm extends Component {
   }
 
   handleSubmit(e) {
-    e.preventDefault()
-    this.props.handleSubmit(this.props.counselor_id, this.props.patient_id, this.state.task)
+    e.preventDefault();
+    this.props.handleSubmit(this.props.counselor_id, 7, this.state.task);
   }
 
   render() {
     console.log(this.state.task);
     return (
-      <div>
-        <h1>Create Task for Patient</h1>
-        <form>
-          <input
-            type="field"
-            name="task"
-            value={this.state.task}
-            onChange={this.handleChange}
-          />
-          <input type="submit" />
-        </form>
+      <div className="outer">
+        <div className="inner">
+          <h1>Create Task for Patient</h1>
+          <form onSubmit={this.handleSubmit}>
+            <input
+              type="field"
+              name="task"
+              value={this.state.task}
+              onChange={this.handleChange}
+            />
+            <input type="submit" />
+          </form>
+        </div>
       </div>
     );
   }
