@@ -10,26 +10,21 @@ import {
   loadUserData,
   Person
 } from "blockstack";
+import { Route, Switch, withRouter, Redirect } from "react-router-dom";
+import CounselorContainer from "./containers/CounselorContainer";
 
 import Session from "./session/Session.jsx";
 
-export default class App extends Component {
+class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      person: {
-        name() {
-          return "Anonymous";
-        },
-        avatarUrl() {
-          return avatarFallbackImage;
-        }
-      },
       users: [],
       currentUser: {},
       personName: "",
       personAvatar: "",
-      created: false
+      created: false,
+      counselors: []
     };
   }
 
@@ -54,14 +49,14 @@ export default class App extends Component {
         this.setState({ users });
 
         const currentUser = users.find(user => {
-          return user.name.toString() === this.state.person.name().toString();
+          return user.name.toString() === this.state.personName;
         });
 
         if (currentUser) {
           this.setState({
             currentUser
           });
-        } else if (this.state.person.name().toString() !== "Anonymous") {
+        } else if (this.state.personName !== "Anonymous") {
           this.createNewUser();
         }
       });
@@ -79,7 +74,7 @@ export default class App extends Component {
         Accept: "application/json"
       },
       body: JSON.stringify({
-        name: this.state.person.name(),
+        name: this.state.personName,
         bio: null,
         role: "patient",
         image: "https://s3.amazonaws.com/onename/avatar-placeholder.png",
@@ -94,28 +89,56 @@ export default class App extends Component {
       });
   }
 
-  redirectHandler() {
-    if (!isUserSignedIn()) {
-      return <Signin handleSignIn={this.handleSignIn} />;
-    } else {
-      if (this.state.currentUser.role === "patient") {
-        return (
-          <Profile
-            handleSignOut={this.handleSignOut}
-            getUsers={this.getUsers}
-          />
-        );
-      } else {
-        return <Session currentUser={this.state.currentUser} />;
-      }
-    }
-  }
-
   render() {
-    console.log(this.state.currentUser);
+    if (this.state.currentUser.role === "counselor") {
+      this.props.history.push({
+        pathname: `/session/${this.state.currentUser.id}`,
+        state: {
+          role: this.state.currentUser.role
+        }
+      });
+    }
+
     return (
       <div className="site-wrapper">
-        <div className="site-wrapper-inner">{this.redirectHandler()}</div>
+        <div className="site-wrapper-inner">
+          {!isUserSignedIn() ? (
+            <Signin handleSignIn={this.handleSignIn} />
+          ) : (
+            <Profile
+              handleSignOut={this.handleSignOut}
+              getUsers={this.getUsers}
+            />
+          )}
+          <div>
+            <Switch>
+              <Route
+                path="/counselorprofile/:id"
+                render={() => (
+                  <CounselorProfile counselors={this.state.counselors} />
+                )}
+              />
+
+              <Route
+                path="/session/:id"
+                render={() => <Session currentUser={this.state.currentUser} />}
+              />
+              <Route
+                path="/counselors"
+                render={() => (
+                  <CounselorContainer counselors={this.state.counselors} />
+                )}
+              />
+
+              <Route
+                path="/"
+                render={() => (
+                  <CounselorContainer counselors={this.state.counselors} />
+                )}
+              />
+            </Switch>
+          </div>
+        </div>
       </div>
     );
   }
@@ -128,13 +151,15 @@ export default class App extends Component {
     }
 
     if (isUserSignedIn()) {
+      const userData = loadUserData();
+
       this.setState({
-        person: new Person(loadUserData().profile)
+        personName: userData.username
       });
     }
   }
-
   componentDidMount() {
     this.getUsers();
   }
 }
+export default withRouter(App);
