@@ -12,6 +12,9 @@ import {
 } from "blockstack";
 import { Route, Switch, withRouter, Redirect } from "react-router-dom";
 import CounselorContainer from "./containers/CounselorContainer";
+import CounselorProfile from "./components/CounselorProfile";
+import Home from "./components/Home";
+import CreateTaskForm from "./components/CreateTaskForm.js";
 
 import Session from "./session/Session.jsx";
 
@@ -48,6 +51,9 @@ class App extends Component {
       .then(resp => resp.json())
       .then(users => {
         this.setState({ users });
+
+        let counselorList = users.filter(user => user.role === "counselor");
+        this.setState({ counselors: counselorList });
 
         const currentUser = users.find(user => {
           return user.name.toString() === this.state.personName;
@@ -109,9 +115,13 @@ class App extends Component {
           <div>
             <Switch>
               <Route
-                path="/counselorprofile/:id"
+                path="/counselors/:id"
                 render={() => (
-                  <CounselorProfile counselors={this.state.counselors} />
+                  <CounselorProfile
+                    counselors={this.state.counselors}
+                    chosenCounselor={this.state.chosenCounselor}
+                    {...this.props}
+                  />
                 )}
               />
 
@@ -122,16 +132,17 @@ class App extends Component {
               <Route
                 path="/counselors"
                 render={() => (
-                  <CounselorContainer counselors={this.state.counselors} />
+                  <CounselorContainer
+                    counselors={this.state.counselors}
+                    {...this.props}
+                    counselorChosen={this.counselorChosen}
+                  />
                 )}
               />
 
-              <Route
-                path="/"
-                render={() => (
-                  <CounselorContainer counselors={this.state.counselors} />
-                )}
-              />
+              <Route path="/todolist" component={CreateTaskForm} />
+
+              <Route path="/" component={Home} />
             </Switch>
           </div>
         </div>
