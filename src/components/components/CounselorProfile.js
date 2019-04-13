@@ -20,9 +20,6 @@ const CounselorProfile = props => {
               />
             </div>
             <div className="profile-info">
-              <p>
-                <b>Specialty:</b> {currentCounselor.specialty}
-              </p>
               <p>{currentCounselor.bio}</p>
             </div>
           </div>
