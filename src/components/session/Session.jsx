@@ -12,17 +12,11 @@ class Session extends Component {
   }
 
   componentDidMount() {
-    //   navigator.mediaDevices.getUserMedia({ video: true, audio: true }, gotMedia, function() {})
     const media = navigator.mediaDevices.getUserMedia({
       video: true,
       audio: true
     });
-    //   .then(stream => {
-    //     console.log(this);
-    //     this.videoRef.current.srcObject = stream;
-    //   });
 
-    // console.log(this.props);
     if (this.props.currentUser.role === "counselor") {
       media.then(stream => (this.videoRef.current.srcObject = stream));
     } else {
