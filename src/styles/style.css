@@ -8,8 +8,10 @@ html,
 body {
 }
 body {
-
-/* .hide { */
+  /* color: #fff;
+  text-align: center;
+} */
+  /* .hide { */
   /* display: none; */
 }
 .landing-heading {
@@ -118,117 +120,107 @@ textarea {
     z-index: 10;
 }
 .counselor-img {
-    height: auto;
-    width: 110px;
-    border-radius: 25px;
-  }
-  .counselor-card-container {
-    display: flex;
-    border: 2px solid black;
-    border-radius: 25px;
-    margin: 1em;
-    width: 80%;
-    justify-content: center;
-    align-items: center;
-  }
-  .counselor-card-img {
-    justify-content: center;
-    padding: 1em;
-  }
-  .counselor-card-bio {
-    justify-content: center;
-    padding: 1em;
-  }
-  
-  .profile-container {
-    display: flex;
-    flex-wrap: wrap;
-  }
-  .profile-name-pic {
-    justify-content: center;
-    padding: 1em;
-    margin: 1em;
-  }
-  .profile-info {
-    justify-content: center;
-    padding: 1em;
-    width: 60%;
-    border: 2px solid black;
-    border-radius: 25px;
-    margin: 1em;
-  }
-  .profile-info p {
-    font-family: 'Bree Serif', serif;
-  }
-  .profile-pic {
-    width: 200px;
-    height: auto;
-  }
-
-  .ui.menu {
-    font-size: 20px;
-    font-family: 'Bree Serif', serif;
+  height: auto;
+  width: 110px;
+  border-radius: 25px;
+}
+.counselor-card-container {
+  display: flex;
+  border: 2px solid black;
+  border-radius: 25px;
+  margin: 1em;
+  width: 80%;
+  justify-content: center;
+  align-items: center;
+}
+.counselor-card-img {
+  justify-content: center;
+  padding: 1em;
+}
+.counselor-card-bio {
+  justify-content: center;
+  padding: 1em;
 }
 
-  .container {
-      display:flex;
-      position: relative;
-      text-align: center;
-      color: rgb(37, 37, 37);
-      font-size: 5em;
-  }
-  .banner {
-      width: 100%;
-      height: 80vh;
-      opacity: 0.5;
-  }
-  .banner-header {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-  }
-  .banner-header h1 {
-    font-size: 80px;
-    font-family: 'Pacifico', cursive;
-  }
-  .quote-pic {
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      margin-top: 20px;
-  }
-  .quote-pic img {
-      width: 45%;
-      height: 50vh;
-  }
- .banner2 img {
-     margin-top: 20px;
-     align-self: center;
-     width: 100%;
-     height: auto;
-     margin-bottom: 20px;
- }
- .vp {
-     text-align: center;
-     font-family: 'Bree Serif', serif;
-     font-size: 40px;
- }
- .vp-container {
-     display: flex;
-     justify-content: space-around;
-     margin: auto;
- }
- .vp-container div {
-     border: 2px solid black;
-     padding: 2em;
-     border-radius: 25px;
-     margin: auto;
-     -moz-box-shadow: 5px 6px 6px 0px #ccc;
-     -webkit-box-shadow: 5px 6px 6px 0px #ccc;
-     box-shadow: 5px 6px 6px 0px #ccc;
- }
- .vp-container p {
-    font-size: 20px;
-    font-family: 'Bree Serif', serif;
- }
+.profile-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+.profile-name-pic {
+  justify-content: center;
+  padding: 1em;
+  margin: 1em;
+}
+.profile-info {
+  justify-content: center;
+  padding: 1em;
+  width: 60%;
+  border: 2px solid black;
+  border-radius: 25px;
+  margin: 1em;
+}
+.profile-info p {
+  font-family: "Bree Serif", serif;
+}
+.profile-pic {
+  width: 200px;
+  height: auto;
+}
+
+.ui.menu {
+  font-size: 20px;
+  font-family: "Bree Serif", serif;
+}
+
+.container {
+  display: flex;
+  position: relative;
+  text-align: center;
+  color: rgb(37, 37, 37);
+  font-size: 5em;
+}
+.banner {
+  width: 100%;
+  height: 80vh;
+  opacity: 0.5;
+}
+.banner-header {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.banner-header h1 {
+  font-size: 80px;
+  font-family: "Pacifico", cursive;
+}
+.quote-pic {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 20px;
+}
+.quote-pic img {
+  width: 45%;
+  height: 50vh;
+}
+.banner2 img {
+  margin-top: 20px;
+  align-self: center;
+  width: 100%;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+.outer {
+  margin-top: 40vh;
+  display: flex;
+}
+
+.inner {
+  margin: auto;
+}
+
+.center {
+  text-align: center;
+}
