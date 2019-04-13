@@ -6,33 +6,41 @@ import {
   isUserSignedIn,
   redirectToSignIn,
   handlePendingSignIn,
-  signUserOut
+  signUserOut,
+  loadUserData,
+  Person
 } from "blockstack";
 import { Route, Switch, withRouter } from "react-router-dom";
 import CounselorContainer from "./containers/CounselorContainer";
 
-class App extends Component {
+export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      person: {
+        name() {
+          return "Anonymous";
+        },
+        avatarUrl() {
+          return avatarFallbackImage;
+        }
+      },
+      users: [],
+      currentUser: {},
+      personName: "",
+      personAvatar: "",
+      created: false,
       counselors: []
     };
   }
 
-  componentDidMount() {
-    fetch("http://localhost:3000/api/v1/users")
-      .then(res => res.json())
-      .then(data => {
-        let counselorList = data.filter(user => user.role === "counselor");
-        this.setState({
-          counselors: counselorList
-        });
-      });
-  }
-
   handleSignIn(e) {
     e.preventDefault();
-    redirectToSignIn();
+    const origin = window.location.origin;
+    redirectToSignIn(origin, origin + "/manifest.json", [
+      "store_write",
+      "publish_data"
+    ]);
   }
 
   handleSignOut(e) {
@@ -40,14 +48,62 @@ class App extends Component {
     signUserOut(window.location.origin);
   }
 
+  getUsers() {
+    fetch("http://localhost:3000/api/v1/users")
+      .then(resp => resp.json())
+      .then(users => {
+        this.setState({ users });
+
+        const currentUser = users.find(user => {
+          return user.name.toString() === this.state.person.name().toString();
+        });
+
+        if (currentUser) {
+          this.setState({
+            currentUser
+          });
+        } else if (this.state.person.name().toString() !== "Anonymous") {
+          this.createNewUser();
+        }
+      });
+  }
+
+  // if user exists in our users array, then find that user and send that object to App's state as currentUser
+  // else create new user object and tell our Rails backend about it, then send that object to App's state as currentUser
+
+  createNewUser() {
+    console.log("creating new user");
+    fetch("http://localhost:3000/api/v1/users", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+      body: JSON.stringify({
+        name: this.state.person.name(),
+        bio: null,
+        role: "patient",
+        image: "https://s3.amazonaws.com/onename/avatar-placeholder.png",
+        status: "online"
+      })
+    })
+      .then(res => res.json())
+      .then(user => {
+        this.setState({
+          currentUser: user
+        });
+      });
+  }
+
   render() {
+    console.log(this.state.currentUser);
     return (
       <div className="site-wrapper">
         <div className="site-wrapper-inner">
           {!isUserSignedIn() ? (
             <Signin handleSignIn={this.handleSignIn} />
           ) : (
-            <Profile handleSignOut={this.handleSignOut} />
+            <Profile handleSignOut={this.handleSignOut} getUsers={this.getUsers}/>
           )}
           <div>
             <Switch>
@@ -73,6 +129,7 @@ class App extends Component {
               />
             </Switch>
           </div>
+
         </div>
       </div>
     );
@@ -84,6 +141,15 @@ class App extends Component {
         window.location = window.location.origin;
       });
     }
+
+    if (isUserSignedIn()) {
+      this.setState({
+        person: new Person(loadUserData().profile)
+      });
+    }
+  }
+  componentDidMount() {
+    this.getUsers();
   }
 }
 export default withRouter(App);
