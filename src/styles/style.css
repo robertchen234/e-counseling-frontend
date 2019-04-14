@@ -338,7 +338,7 @@ textarea {
 }
 
 .outer {
-  margin-top: 40vh;
+  margin-top: 4em;
   display: flex;
 }
 
@@ -349,3 +349,18 @@ textarea {
 .center {
   text-align: center;
 }
+.center p {
+    font-size: 20px;
+}
+.create-task input {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  .small-space {
+      margin-bottom: 1.5em;
+  }

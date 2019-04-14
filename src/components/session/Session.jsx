@@ -61,7 +61,7 @@ class Session extends Component {
           <video autoPlay={true} ref={this.videoRemoteRef} />
         </div>
         <Link to="/todolist">
-          <h2 className="center">Create Task for Patient</h2>
+          <h2 className="center">Create task(s) to complete for your next session</h2>
         </Link>
       </React.Fragment>
     );

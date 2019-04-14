@@ -185,6 +185,7 @@ class App extends Component {
                   <CreateTaskForm
                     handleSubmit={this.handleSubmit}
                     counselor_id={this.state.currentUser.id}
+                    tasks={this.state.tasks}
                   />
                 )}
               />
@@ -216,6 +217,7 @@ class App extends Component {
   }
   componentDidMount() {
     this.getUsers();
+    this.getTasks();
   }
 }
 export default withRouter(App);
