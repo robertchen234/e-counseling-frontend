@@ -12,17 +12,49 @@ class Session extends Component {
   }
 
   componentDidMount() {
-    const media = navigator.mediaDevices.getUserMedia({
-      video: true,
-      audio: true
-    });
+    // const media = navigator.mediaDevices.getUserMedia({
+    //   video: true,
+    //   audio: true
+    // });
+
+    const peer1 = new Peer();
+    const peer2 = new Peer();
+
+    peer1.on("signal", data => peer2.signal(data));
+    peer2.on("signal", data => peer1.signal(data));
 
     if (this.props.currentUser.role === "counselor") {
-      media.then(stream => (this.videoRef.current.srcObject = stream));
+      navigator.mediaDevices
+        .getUserMedia({
+          video: true,
+          audio: true
+        })
+        .then(stream => {
+          this.videoRef.current.srcObject = stream;
+          peer1.addStream(stream);
+          peer2.on(
+            "track",
+            (track, stream) => (this.videoRef.current.srcObject = stream)
+          );
+        });
     } else {
       //   debugger;
-      media.then(stream => (this.videoRemoteRef.srcObject = stream));
+      navigator.mediaDevices
+        .getUserMedia({
+          video: true,
+          audio: true
+        })
+        .then(stream => {
+          this.videoRemoteRef.current.srcObject = stream;
+          peer2.addStream(stream);
+        });
     }
+
+    peer1.on("stream", stream => (this.videoRef.current.srcObject = stream));
+    peer2.on(
+      "stream",
+      stream => (this.videoRemoteRef.current.srcObject = stream)
+    );
 
     // function gotMedia(stream) {
     //   const peer1 = new Peer({ initiator: true, stream: stream });

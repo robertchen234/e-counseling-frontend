@@ -47,7 +47,7 @@ class App extends Component {
   }
 
   getUsers() {
-    fetch("http://localhost:3000/api/v1/users")
+    fetch("http://10.39.105.62:4006/api/v1/users")
       .then(resp => resp.json())
       .then(users => {
         this.setState({ users });
@@ -56,7 +56,7 @@ class App extends Component {
         this.setState({ counselors: counselorList });
 
         const currentUser = users.find(user => {
-          return user.name.toString() === this.state.personName;
+          return user.name === this.state.personName;
         });
 
         if (currentUser) {
@@ -74,7 +74,7 @@ class App extends Component {
 
   createNewUser() {
     console.log("creating new user");
-    fetch("http://localhost:3000/api/v1/users", {
+    fetch("http://10.39.105.62:4006/api/v1/users", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
